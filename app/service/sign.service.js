@@ -86,6 +86,8 @@
                 logado: false
             });
 
+            deferred.resolve(true);
+
             return deferred.promise;
         }
 
