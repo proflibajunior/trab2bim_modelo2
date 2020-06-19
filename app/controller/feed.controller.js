@@ -24,7 +24,11 @@
 
             //Carrega os usuários
             UsuarioService.listar().then(function( result2 ){
-                $scope.usuarios = result2.data;
+                result2.data.forEach(item => {
+                    if ($scope.logado.username != item.username) {
+                        $scope.usuarios.push(item);
+                    }    
+                });
             });
         });
     });

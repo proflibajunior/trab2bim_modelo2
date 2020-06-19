@@ -5,7 +5,7 @@
         const deferred = $q.defer();
 
         function loadJSON() { 
-            deferred.resolve($localStorage.usuarios || []);
+            deferred.resolve({data: $localStorage.usuarios});
 
             return deferred.promise;
         }

@@ -41,9 +41,16 @@
                 </div>
 
                 <div class="card-side">
-                    <h4>Sugestão para você</h4>{{usuarios}}
-                    <ul>
-                        <li ng-repeat="user in usuarios">buuu</li>
+                    <h4>Sugestão para você</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center"
+                             ng-repeat="usuario in usuarios">
+                            <div>
+                                <img class="avatar avatar-sm" ng-src="{{'assets/img/avatars/'+ usuario.avatar +'.svg'}}">
+                                <span>{{usuario.username}}</span> 
+                            </div>
+                            <button class="btn btn-link btn-sm">Seguir</button>
+                        </li>
                     </ul>
                 </div>
             </div>
