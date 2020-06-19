@@ -5,7 +5,7 @@
         const deferred = $q.defer();
 
         function loadJSON() { 
-            deferred.resolve($localStorage.feeds || []);
+            deferred.resolve({data: $localStorage.feeds || []});
 
             return deferred.promise;
         }
@@ -24,7 +24,7 @@
             //Atualiza o valor da storage
             $localStorage.feeds = dados;
 
-            deferred.resolve(dados);
+            deferred.resolve({data: dados});
 
             return deferred.promise;
         }

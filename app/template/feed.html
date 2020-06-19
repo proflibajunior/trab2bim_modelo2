@@ -16,7 +16,7 @@
                             <button class="dropdownitem btn btn-link">Perfil</button>
                             <div class="dropdown-divider"></div>
                             <button class="dropdownitem btn btn-link" ng-click="sair()">Sair</button>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,42 @@
     <div class="feeds container">
         <div class="row">
             <div class="col-8">
-                
+                <div class="no-feeds" ng-if="feeds.length == 0">
+                    <p class="lead text-center">Nenhuma postagem foi feita ainda!</p>
+                </div>
+                <div class="card" ng-repeat="feed in feeds | orderBy:'-id'">
+                    <div class="card-header">
+                        <img class="avatar avatar-sm" ng-src="{{'assets/img/avatars/'+ feed.usuario.avatar +'.svg'}}">
+                                <span>{{feed.usuario.username}}</span>
+                    </div>
+                    <img ng-src="{{feed.imagem}}" class="card-img-top">
+                    <div class="card-body">
+                        <p class="feed-time">Postado em <time>{{feed.dtpost | date:'dd/MM/yyyy'}} às {{feed.dtpost | date:'HH:mm'}}</time></p>
+                        
+                        <div class="curtir">
+                            <svg fill="#ed4956" height="24" viewBox="0 0 48 48" width="24" ng-if="feed.curtidas > 0">
+                                <path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
+                            </svg>
+                            <p class="text-muted" ng-if="feed.curtidas == 1">Curtido 1 vez</p>
+                            <p class="text-muted" ng-if="feed.curtidas > 1">Curtido {{feed.curtidas}} vezes</p>
+                            <span class="spacer"></span>
+                            <button class="btn btn-outline-primary" ng-click="curtir(feed)">Curtir</button>
+                        </div>
+
+                        <ul class="list-unstyled">
+                            <li ng-repeat="comentario in feed.comentarios">
+                                <p ng-if="comentario.comentario"><strong>{{comentario.usuario.username}}</strong> {{comentario.comentario}}</p>
+                            </li>
+                        </ul>
+
+                        <div class="comentario">
+                            <div class="form-inline">
+                                <input type="text" placeholder="Adicione um comentário..." ng-model="feed.novocomentario">
+                                <button class="btn btn-link" ng-click="publicar(feed)" ng-disabled="!feed.novocomentario">Publicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="card-side">
@@ -37,21 +72,51 @@
                             <p>{{logado.nome}}</p>
                         </div>
                     </div>
-                    <button class="btn btn-block btn-outline-success">Nova Postagem</button>
+                    <button class="btn btn-block btn-outline-success" data-toggle="modal" data-target="#feedModal">Nova
+                        Postagem</button>
                 </div>
 
                 <div class="card-side">
                     <h4>Sugestão para você</h4>
-                    <ul class="list-group">
+                    <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center"
-                             ng-repeat="usuario in usuarios">
+                            ng-repeat="usuario in usuarios">
                             <div>
-                                <img class="avatar avatar-sm" ng-src="{{'assets/img/avatars/'+ usuario.avatar +'.svg'}}">
-                                <span>{{usuario.username}}</span> 
+                                <img class="avatar avatar-sm"
+                                    ng-src="{{'assets/img/avatars/'+ usuario.avatar +'.svg'}}">
+                                <span>{{usuario.username}}</span>
                             </div>
                             <button class="btn btn-link btn-sm">Seguir</button>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="feedModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Feed</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>URL da Imagem</label>
+                        <input type="text" class="form-control" ng-model="imagem">
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea class="form-control" rows="3" ng-model="descricao"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ligh" data-dismiss="modal">CANCELAR</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="postar()">POSTAR</button>
                 </div>
             </div>
         </div>
