@@ -22,4 +22,31 @@
             </div>
         </div>
     </nav>
+
+    <div class="feeds container">
+        <div class="row">
+            <div class="col-8">
+                
+            </div>
+            <div class="col-4">
+                <div class="card-side">
+                    <div class="media">
+                        <img class="mr-3 avatar avatar-md" ng-src="{{'assets/img/avatars/'+ logado.avatar +'.svg'}}">
+                        <div class="media-body">
+                            <h5>{{logado.username}}</h5>
+                            <p>{{logado.nome}}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-block btn-outline-success">Nova Postagem</button>
+                </div>
+
+                <div class="card-side">
+                    <h4>Sugestão para você</h4>{{usuarios}}
+                    <ul>
+                        <li ng-repeat="user in usuarios">buuu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
